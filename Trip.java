@@ -1,7 +1,7 @@
 /* Trip class */
 public class Trip {
     public Trip() {
-        askfhksajf
+        hi
     }
     public static void main(String[] args) {
 
