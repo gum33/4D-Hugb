@@ -1,3 +1,4 @@
 # 4D-Hugb 
 Repository for the entire Trip Searching program.
-Upload code updates etc...
+Upload code updates, remember to download latest revision.
+Upload any change in code.
