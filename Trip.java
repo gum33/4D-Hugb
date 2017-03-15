@@ -1,5 +1,9 @@
 /* Trip class */
 public class Trip {
+    public Trip() {
 
-Hello
+    }
+    public static void main(String[] args) {
+        
+    }
 }
