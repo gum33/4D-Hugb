@@ -5,7 +5,7 @@ public class Supplier{
 
     public Supplier(String n, Location[] loc, int t) {
         name = n;
-        location = Location[];
+        location = loc;
         telephone =t;
     }
 
@@ -34,14 +34,21 @@ public class Supplier{
     }
 
     public String toString() {
-        String print = name "\nIs located at: ";
+        String print = name + "\nIs located at: ";
         for (int i =0;i<location.length;i++) {
-            print + Location[i] + ", ";
+            print = print + location[i] + ", ";
         }
-        print =+ "\nTelephone: " + telephone;
+        print = print + "\nTelephone: " + telephone;
         return print;
     }
     public static void main(String[] args) {
-            
+     Location kef = new Location("Keflavik", "Reykjanes");
+     Location isaf = new Location("Isafjordur", "Vestfyrdir");
+
+     Location[] l = {kef, isaf};
+     Supplier filippo = new Supplier("Filippo", l, 6665555);   
+     System.out.println(filippo);
+     filippo.setTelephone(55512313);
+     System.out.println(filippo); 
         }
 }
