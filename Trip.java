@@ -1,12 +1,12 @@
 /* Trip class */
 public class Trip {
-    //private Category[] category; *Need Category class*
+    private Category[] category;
     private double duration; //Duration of Trip
     private String date; //Date of Trip
     private int price; 
-    //private Review[] review; *Needs review class*
+    private Review[] review;
     private String[] languages;
-    //private Location[] location; *Needs Location class
+    private Location[] location;
     private String description;
     private int capacity;
 
