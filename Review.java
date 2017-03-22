@@ -7,6 +7,8 @@ public class Review {
     public Review(String a, String c, int s) {
         author = a;
         comment =c;
+        if(s>5) s=5;
+        if(0>s) s=0;
         stars = s;
     }
 
@@ -33,7 +35,7 @@ public class Review {
     }
 
     public void setAuthor(String a) {
-        author = a;
+        author = a; 
     }
 
     public String toString() {
