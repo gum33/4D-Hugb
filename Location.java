@@ -1,7 +1,7 @@
 public class Location {
     
     private String placename;
-    private area String;
+    private String area;
     
     public Location(String n, String a) {     
         placename = n;
@@ -22,6 +22,10 @@ public class Location {
 
     public void setArea(String a) {
         area = a;
+    }
+
+    public String toString() {
+        return placename;
     }
     public static void main(String[] args) {
             
