@@ -74,7 +74,12 @@ public class Trip {
     }
 
     public String toString() {
-        return "Trip with "+category[0] + category[1];
+        String play = "See some "+ category[0];
+        if(category.length!=1) {
+            play = play + " and " + category[1];
+        }
+        play = play + " at " + date;
+        return play;
     }
     
     public static void main(String[] args) {
