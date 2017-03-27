@@ -10,13 +10,14 @@ public class Trip {
     private String description;
     private int capacity;
 
-    public Trip(Category[] category, String date, int price, String[] languages, int capacity, String description) {
+    public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity,) {
     	this.category = category;
-    	this.date = date;
+    	this.duration = duration;
+        this.date = date;
     	this.price = price;
     	this.languages = languages;
-    	this.capacity = capacity;
     	this.description = description;
+        this.capacity = capacity;
     }
 
     public Category getCategories() {
