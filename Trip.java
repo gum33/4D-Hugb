@@ -10,7 +10,7 @@ public class Trip {
     private String description;
     private int capacity;
 
-    public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity,) {
+    public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity) {
     	this.category = category;
     	this.duration = duration;
         this.date = date;
