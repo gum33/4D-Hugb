@@ -20,8 +20,8 @@ public class Trip {
         this.capacity = capacity;
     }
 
-    public Category getCategories() {
-    	
+    public Category[] getCategories() {
+        return category;
     }
 
     public void setCategories(Category c){
@@ -71,6 +71,10 @@ public class Trip {
 
     public void setCapacity(int capacity) {
     	this.capacity = capacity;
+    }
+
+    public String toString() {
+        return "Trip with "+category[0] + category[1];
     }
     
     public static void main(String[] args) {

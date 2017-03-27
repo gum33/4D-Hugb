@@ -2,41 +2,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchManager {
-    private List<Trip> trips;
+    private ArrayList<Trip> trips= new ArrayList<>();
     private List<Trip> result;
-    private TripContainer alltrips;
+    private TripContainer alltrips = new TripContainer();
 
     public SearchManager() {
        TripContainer alltrips = new TripContainer();
+       
     }
 
-    public int[] search(Category[] searchedCategory) {
+    public int[] search(Category[] searchedCategory, TripContainer wh) {
+        alltrips = wh;
+        trips.ensureCapacity(100);
         trips = alltrips.getTrips();
         int n = searchedCategory.length;
         int c = trips.size();
-        int i=0, j=0,k=0;
+    
+        int i, j=0,k;
         int[] B = new int[c];
         for(i=0;i<c;i++) {
-            boolean check = True;
+            boolean check = true;
             Trip look = trips.get(i);
             Category[] here= look.getCategories();
             for(k=0;k<n;k++) {
                 for(int z=0;z<here.length;z++) {
                     if(here[z]==searchedCategory[k]) {
-                        check = True;
+                        check = true;
                         break;
                     }
-                    check = False;
+                    check = false;
                 }
             }
             if(check) {
-                B[j] = i;
-                j++
+                B[j] = i+1;
+                j++;
             }
         }
         return B;
-
-
 
     }
 
@@ -44,7 +46,7 @@ public class SearchManager {
 
     }
 
-    public void sortPrice(); {
+    public void sortPrice() {
 
     }
 
@@ -56,7 +58,7 @@ public class SearchManager {
 
     }
 
-    public void addTrip(Trip) {
+    public void addTrip(Trip t) {
         
     }
     public static void main(String[] args ) {

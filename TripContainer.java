@@ -3,19 +3,20 @@ import java.util.List;
 
 
 public class TripContainer {
-    private List<Trip> alltrips;
-    private int tripnumber;
+    private ArrayList<Trip> alltrips= new ArrayList<Trip>();
+    private int tripnumber=0;
 
     public TripContainer() {
-        List<Trip> alltrips = new ArrayList<Trip>();
+        ArrayList<Trip> alltrips = new ArrayList<Trip>();
         tripnumber = 0;
     }
     public void addTrip(Trip t) {
+        alltrips.ensureCapacity(tripnumber+1);
         alltrips.add(tripnumber,t);
         tripnumber++;
     }
 
-    public List<Trip> getTrips() {
+    public ArrayList<Trip> getTrips() {
         return alltrips;
     
     }
