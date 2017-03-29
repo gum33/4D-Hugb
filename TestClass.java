@@ -35,12 +35,22 @@ public class TestClass {
         result = find.search(wp, TANK);
         ArrayList<Trip> funtrips= new ArrayList<Trip>();
         funtrips = TANK.getTrips();
+        int count =0;
+        for (int i=0;i<result.length;i++) {
+            if(result[i]!=0)
+            count++;
+        }
+
+        Trip[] sorttest = new Trip[count];
+        for(int i =0;i<sorttest.length;i++) {
+                Trip bob = funtrips.get(result[i]-1);
+                sorttest[i] = bob;
+        }
+
         
-        for (int i : result) {
-            if(i!=0) {
-                System.out.println(i);
-                System.out.println(funtrips.get(i-1));
-            }
+        find.sortPrice(sorttest);
+        for (Trip i : sorttest) {
+            System.out.println(i);
         }
 
     }
