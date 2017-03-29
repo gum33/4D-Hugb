@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.*;
+import static org.junit.Assert.*;
 
 public class TestClass {
+    private Trip[] sorttest;
+    private Trip[] equal = new Trip[2];
+    private Trip trip1,trip2,trip3,trip4;
+    private int[] result;
+    private int[] exp = {1,4,0, 0};
 
-    public static void setUp() {
+    @Before
+    public  void setUp() {
         Category wf = new Category("Waterfall");
         Category puffin = new Category("Puffin");
         Category geiser = new Category("Geiser");
@@ -20,10 +28,12 @@ public class TestClass {
         Location isf = new Location("Isafjörður", "Vestfyrdir");
         String[] lang = {"English", "Spanish", "French"};
 
-        Trip trip1 = new Trip(wp,5,"25.05.2017",5000, lang,  "Fun day trip",10);
-        Trip trip2 = new Trip(gh,2, "02.06.2017", 10000, lang,  "Boring trip",10);
-        Trip trip3 = new Trip(gl,3, "08.08.2017", 12000, lang,  "Superb trip",10);
-        Trip trip4 = new Trip(wp,5.5, "01.08.2017", 8000, lang,  "Colio trip",5); 
+        trip1 = new Trip(wp,5,"25.05.2017",8000, lang,  "Fun day trip",10);
+        trip2 = new Trip(gh,2, "02.06.2017", 10000, lang,  "Boring trip",10);
+        trip3 = new Trip(gl,3, "08.08.2017", 12000, lang,  "Superb trip",10);
+        trip4 = new Trip(wp,5.5, "01.08.2017", 5000, lang,  "Colio trip",5); 
+        equal[0]=trip1;
+        equal[1]=trip4;
         TripContainer TANK = new TripContainer();
         TANK.addTrip(trip1);
         TANK.addTrip(trip2);
@@ -31,17 +41,16 @@ public class TestClass {
         TANK.addTrip(trip4);
         
         SearchManager find = new SearchManager();
-        int[] result =new int[1];
+        
         result = find.search(wp, TANK);
         ArrayList<Trip> funtrips= new ArrayList<Trip>();
         funtrips = TANK.getTrips();
         int count =0;
         for (int i=0;i<result.length;i++) {
-            if(result[i]!=0)
-            count++;
+            if(result[i]!=0) count++;
         }
 
-        Trip[] sorttest = new Trip[count];
+        sorttest = new Trip[count];
         for(int i =0;i<sorttest.length;i++) {
                 Trip bob = funtrips.get(result[i]-1);
                 sorttest[i] = bob;
@@ -55,14 +64,15 @@ public class TestClass {
 
     }
 
-    public void testSearch() {
-       
+    @Test
+    public  void testSearch() {
+        assertEquals(8000,trip1.getPrice());
+        assertArrayEquals(exp, result);
     }
     
 
     public static void main(String[] args) {
-        setUp();
-        
-        
+       // setUp();
+           
     }
 }
