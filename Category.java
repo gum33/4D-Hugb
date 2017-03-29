@@ -7,6 +7,11 @@ public class Category {
     public Category(String k) {
         keyword = k;
     }
+    
+    public boolean equals(Category c) {
+        return this.keyword==c.getCategory();
+    
+    }
 
     public void setKeyword(String k) {
         keyword=k;

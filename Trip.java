@@ -1,5 +1,6 @@
 
-public class Trip {
+
+public class Trip implements Comparable<Trip>{
     private Category[] category;
     private double duration; //Duration of Trip
     private String date; //Date of Trip
@@ -18,6 +19,20 @@ public class Trip {
     	this.languages = languages;
     	this.description = description;
         this.capacity = capacity;
+    }
+    
+    public int compareTo(Trip t) {
+        boolean check = true;
+        while(check) {
+            if(!(this.price==t.getPrice())) check = false;
+            if(!this.date.equals(t.getDate())) check = false;
+            if(!this.description.equals(t.getDescription())) check = false;
+            if(!this.languages.equals(t.getLanguages())) check = false;
+            if(!(this.capacity==t.getCapacity())) check=false;
+            if(!this.category.equals(t.getCategories())) check = false;
+            return 0;
+        }
+        return 1;
     }
 
     public Category[] getCategories() {
