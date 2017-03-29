@@ -46,8 +46,20 @@ public class SearchManager {
 
     }
 
-    public void sortPrice() {
+    public Trip[] sortPrice(Trip[] arr) {
+        int l = arr.length;
+        for (int i=1;i<l;i++) {
+            int x = arr[i].getPrice();
+            int j = i-1;
+            while (0<=j && x<arr[j].getPrice()) {
+                Trip tmp = arr[j+1];
+                arr[j+1]=arr[j];
+                arr[j]=tmp;
+                j--;
+            }
 
+        }
+        return arr;
     }
 
     public void sortDuration() {
