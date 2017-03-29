@@ -11,15 +11,15 @@ public class SearchManager {
        
     }
 
-    public int[] search(Category[] searchedCategory, TripContainer wh) {
+    public ArrayList<Trip> search(Category[] searchedCategory, TripContainer wh) {
         alltrips = wh;
         trips.ensureCapacity(100);
         trips = alltrips.getTrips();
         int n = searchedCategory.length;
         int c = trips.size();
     
-        int i, j=0,k;
-        int[] B = new int[c];
+        int i, j=0, k;
+        ArrayList<Trip> B = new ArrayList<>();
         for(i=0;i<c;i++) {
             boolean check = true;
             Trip look = trips.get(i);
@@ -34,11 +34,11 @@ public class SearchManager {
                 }
             }
             if(check) {
-                B[j] = i+1;
-                j++;
+                B.add(look);
             }
         }
         return B;
+        
 
     }
 
@@ -63,7 +63,7 @@ public class SearchManager {
     }
 
     public void sortDuration() {
-
+        
     }
 
     public void sortLanguage() {
