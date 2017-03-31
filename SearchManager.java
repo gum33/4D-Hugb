@@ -45,16 +45,15 @@ public class SearchManager {
     public void sortDate() {
 
     }
-
-    public Trip[] sortPrice(Trip[] arr) {
-        int l = arr.length;
+    public ArrayList<Trip> sortPrice(ArrayList<Trip> arr) {
+        int l = arr.size();
         for (int i=1;i<l;i++) {
-            int x = arr[i].getPrice();
+            int x = arr.get(i).getPrice();
             int j = i-1;
-            while (0<=j && x<arr[j].getPrice()) {
-                Trip tmp = arr[j+1];
-                arr[j+1]=arr[j];
-                arr[j]=tmp;
+            while (0<=j && x<arr.get(j).getPrice()) {
+                Trip tmp = arr.get(j+1);
+                arr.set(j+1,arr.get(j));
+                arr.set(j,tmp);
                 j--;
             }
 

@@ -29,7 +29,7 @@ public class Review {
         stars = s;
 
     }
-
+    
     public String getAuthor() {
         return author;
     }
