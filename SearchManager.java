@@ -42,9 +42,61 @@ public class SearchManager {
 
     }
 
-    public void sortDate() {
-
+    public ArrayList<Trip> sortDate(ArrayList<Trip> arr) {
+    	int n = arr.size(); 
+    	for (int i = 1; i < n; i++) {
+    		int j = 1;
+    		boolean check = true;
+    		while(j > 0 && check) {
+    			check = false;
+    			Trip trip1 = arr.get(j);
+    			Trip trip2 = arr.get(j-1);
+    			// year
+    			String s1 = trip1.getDate().substring(6,10);
+    			String s2 = trip2.getDate().substring(6,10);    			
+    			int y1 = Integer.parseInt(s1);
+    			int y2 = Integer.parseInt(s2);  
+    			// month
+    			String s3 = trip1.getDate().substring(3,5);
+    			String s4 = trip2.getDate().substring(3,5);    			
+    			int m1 = Integer.parseInt(s3);
+    			int m2 = Integer.parseInt(s4); 
+    			// day
+    			String s5 = trip1.getDate().substring(0,2);
+    			String s6 = trip2.getDate().substring(0,2);    			
+    			int d1 = Integer.parseInt(s5);
+    			int d2 = Integer.parseInt(s6);    			
+    			    			
+    			if (y1 < y2) {
+    				Trip temp = arr.get(j);
+    				arr.set(j, arr.get(j-1));    				
+    				arr.set(j-1, temp);    	
+    				check = true;
+    			} else {
+    				if (y1 == y2) {    			
+	    				if (m1 < m2) {
+	        				Trip temp = arr.get(j);
+	        				arr.set(j, arr.get(j-1));    				
+	        				arr.set(j-1, temp);    	
+	        				check = true;    					
+	    				} else {
+	    					if (m1 == m2) {
+	    						if (d1 < d2) {
+	    	        				Trip temp = arr.get(j);
+	    	        				arr.set(j, arr.get(j-1));    				
+	    	        				arr.set(j-1, temp);    	
+	    	        				check = true;    						    							
+	    						}
+	    					}
+	    				}
+    				}
+    			}
+    			j--;
+    		}      		
+    	}
+    	return arr;
     }
+    
     public ArrayList<Trip> sortPrice(ArrayList<Trip> arr) {
         int l = arr.size();
         for (int i=1;i<l;i++) {
