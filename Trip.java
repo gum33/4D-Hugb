@@ -79,6 +79,10 @@ public class Trip implements Comparable<Trip>{
     public String getDescription() {
     	return this.description;
     }
+
+    public double getDuration() {
+        return this.duration;
+    }
        
     public int getCapacity() {
     	return this.capacity;

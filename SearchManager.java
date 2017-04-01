@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SearchManager {
     private ArrayList<Trip> trips= new ArrayList<>();
@@ -13,12 +16,10 @@ public class SearchManager {
 
     public ArrayList<Trip> search(Category[] searchedCategory, TripContainer wh) {
         alltrips = wh;
-        trips.ensureCapacity(100);
         trips = alltrips.getTrips();
         int n = searchedCategory.length;
         int c = trips.size();
-    
-        int i, j=0, k;
+        int i,  k;
         ArrayList<Trip> B = new ArrayList<>();
         for(i=0;i<c;i++) {
             boolean check = true;
@@ -32,6 +33,7 @@ public class SearchManager {
                     }
                     check = false;
                 }
+                if(!check) break;
             }
             if(check) {
                 B.add(look);
@@ -45,7 +47,7 @@ public class SearchManager {
     public ArrayList<Trip> sortDate(ArrayList<Trip> arr) {
     	int n = arr.size(); 
     	for (int i = 1; i < n; i++) {
-    		int j = 1;
+    		int j = i;
     		boolean check = true;
     		while(j > 0 && check) {
     			check = false;
@@ -113,12 +115,24 @@ public class SearchManager {
         return arr;
     }
 
-    public void sortDuration() {
-        
+    public ArrayList<Trip> sortDuration(ArrayList<Trip> arr) {
+        Collections.sort(arr, new Comparator<Trip>() {
+            @Override
+            public int compare(Trip o1, Trip o2) {
+            return (int)o1.getDuration() - (int)o2.getDuration();
+            }
+        });
+        return arr;
     }
 
-    public void sortLanguage() {
-
+    public ArrayList<Trip> sortLanguage(ArrayList<Trip> arr) {
+        Collections.sort(arr, new Comparator<Trip>() {
+            @Override
+            public int compare(Trip o1, Trip o2) {
+            return o1.getLanguages()[1].compareTo(o2.getLanguages()[1]);
+            }
+        });
+        return arr;
     }
 
     public void addTrip(Trip t) {
