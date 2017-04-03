@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-
-
 public class TripContainer {
     private ArrayList<Trip> alltrips= new ArrayList<Trip>();
     private int tripnumber=0;
