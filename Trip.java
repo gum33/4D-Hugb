@@ -24,12 +24,12 @@ public class Trip implements Comparable<Trip>{
     public int compareTo(Trip t) {
         boolean check = true;
         while(check) {
-            if(!(this.price==t.getPrice())) check = false;
-            if(!this.date.equals(t.getDate())) check = false;
-            if(!this.description.equals(t.getDescription())) check = false;
-            if(!this.languages.equals(t.getLanguages())) check = false;
-            if(!(this.capacity==t.getCapacity())) check=false;
-            if(!this.category.equals(t.getCategories())) check = false;
+            if(!(this.price==t.getPrice())) break;
+            if(!this.date.equals(t.getDate())) break;
+            if(!this.description.equals(t.getDescription())) break;
+            if(!this.languages.equals(t.getLanguages())) break;
+            if(!(this.capacity==t.getCapacity())) break;
+            if(!this.category.equals(t.getCategories())) break;
             return 0;
         }
         return 1;
