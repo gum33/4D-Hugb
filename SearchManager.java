@@ -129,7 +129,7 @@ public class SearchManager {
         Collections.sort(arr, new Comparator<Trip>() {
             @Override
             public int compare(Trip o1, Trip o2) {
-            return o1.getLanguages()[1].compareTo(o2.getLanguages()[1]);
+            return o1.getLanguages()[0].compareTo(o2.getLanguages()[0]);
             }
         });
         return arr;

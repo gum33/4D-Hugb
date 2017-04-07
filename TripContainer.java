@@ -8,9 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class TripContainer {
-    private ArrayList<Trip> alltrips= new ArrayList<Trip>();
+    private static ArrayList<Trip> alltrips= new ArrayList<Trip>();
     private int tripnumber=0;
-    private Category[] allcategories;
+    private static Category[] allcategories;
 
     public TripContainer() {
         ArrayList<Trip> alltrips = new ArrayList<Trip>();
@@ -20,7 +20,7 @@ public class TripContainer {
             List<String> temps = new ArrayList<String>();
             String token = "";
             while(categorylist.hasNext()) {
-                token = categorylist.next();
+                token = categorylist.nextLine();
                 temps.add(token);
             }
             categorylist.close();
@@ -29,6 +29,7 @@ public class TripContainer {
                 Category cat = new Category(temps.get(i));;
                 allcategories[i] = cat;
             }
+            //generateTrips();
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("categorylist file is missing");
         }
@@ -50,11 +51,17 @@ public class TripContainer {
         return allcategories;
     }
     public static void generateTrips() {
-     double duration = generateDuration();
-     int price = generatePrice(duration);
-     String date = generateDate();
-     int capacity = generateCapacity();
-
+        for(int i = 0;i<1000;i++) {
+            double duration = generateDuration();
+            int price = generatePrice(duration);
+            String date = generateDate();
+            int capacity = generateCapacity();
+            Category[] category = generateCategory();
+            String[] langs=generatelangueages();
+            String desc = generateDescription();
+            Trip tripper = new Trip(category, duration, date, price, langs, desc, capacity);
+            alltrips.add(tripper);
+        }
     }
 
     private static double generateDuration() {
@@ -81,15 +88,39 @@ public class TripContainer {
     }
 
     private static Category[] generateCategory() {
-        return null;
+        
+        int othernumber =(int)Math.round(Math.random()*4 + 1);
+        Category[] funk = new Category[othernumber];
+        for(int i=0;i<funk.length;i++) {
+            int somenumber = (int)Math.round(Math.random()*(allcategories.length-1));
+            funk[i] = allcategories[somenumber];
+        }
+        return funk;
     }
 
     private static String[] generatelangueages() {
-        return null;
+        int nr = (int)Math.random()*100;
+        if(nr<85) {
+           String[] wow = {"english"};
+           return wow;
+        }
+        else if(nr<93) {
+           String[] wow ={"english", "french"};
+           return wow;
+        }
+        else if(nr<97) {
+           String[] wow = {"english", "spanish"};
+           return wow;
+        }
+        else  {
+           String[] wow = {"german"};
+           return wow;
+        }
+        
     }
 
     private static String generateDescription() {
-        return null;
+        return "PRETTY GOOD INNIT";
     }
 
     public static void main(String[] args) {

@@ -93,11 +93,19 @@ public class Trip implements Comparable<Trip>{
     }
 
     public String toString() {
-        String play = "See some "+ category[0];
-        if(category.length!=1) {
-            play = play + " and " + category[1];
+        String play = "Enjoy some "+category[0];
+        for(int i=1;i<category.length;i++) {
+            play = play + " and " + category[i];
         }
         play = play + " at " + date;
+        play = play+ ", for " + duration+ "hours";
+        play = play+", for only: " +price;
+        play = play+"Tour available in" ;
+        for(int i=0;i<languages.length;i++) {
+            play = play+ ", " +languages[i];
+        }
+        play= play+"\n";
+        
         return play;
     }
     
