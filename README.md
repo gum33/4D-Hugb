@@ -1,7 +1,12 @@
 # 4D-Hugb 
 Repository for the entire Trip Searching program.
-Upload code updates, remember to download latest revision.
-Upload any change in code.
+Project for Þróun Hugbúnaða, by first year math students.
 
 To test,
-Compile and run MainClass.java
+Compile and run MainClass.java (Might need java 8)
+
+
+Authors:
+Guðmundur Magnússon
+Baldur Benjamin
+Fillipo Casagrande
