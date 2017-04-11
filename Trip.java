@@ -1,11 +1,11 @@
-
+import java.util.ArrayList;
 
 public class Trip implements Comparable<Trip>{
     private Category[] category;
     private double duration; //Duration of Trip
     private String date; //Date of Trip
     private int price; 
-    private Review[] review;
+    private ArrayList<Review> review= new ArrayList<Review>();
     private String[] languages;
     private Location location;
     private String description;
@@ -41,9 +41,8 @@ public class Trip implements Comparable<Trip>{
     }
 
     public void setCategories(Category c){
-    	
-
     }
+
 
     public String[] getLanguages() {
     	return this.languages;
@@ -61,12 +60,21 @@ public class Trip implements Comparable<Trip>{
     	this.price = price;
     }
 
-    public Review[] getReview() {
+    public ArrayList<Review> getReview() {
     	return this.review;
     }
+    public double getAverage() {
+        double sum=0;
+        double ind=0;
+        for(Review re: review) {
+            sum=sum+re.getStars();
+            ind++;
 
-    public void setReview(Review[] review) {
-    	this.review = review;
+        }
+        return (sum/ind);
+    }
+    public void setReview(Review rev) {
+    	review.add(rev);
     }
 
     public String getDate() {
@@ -94,12 +102,9 @@ public class Trip implements Comparable<Trip>{
     }
 
     public String toString() {
-        
-        
         return this.description;
     }
     
     public static void main(String[] args) {
-
     }
 }

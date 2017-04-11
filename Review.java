@@ -39,11 +39,9 @@ public class Review {
     }
 
     public String toString() {
-        String print = "" + author + " gave this trip: " +stars+ " stars. \nComment: " + comment;
+        String print = "\n" + author + ": " + comment;
         return print;
     }
-
-
     
     public static void main(String[] args) {
         Review newReview = new  Review("BOB", "Great Trip RECOMend",5);

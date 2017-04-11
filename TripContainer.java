@@ -139,17 +139,17 @@ public class TripContainer {
 
     //trips can be available in multible languages.
     private static String[] generatelangueages() {
-        int nr = (int)Math.random()*100;
+        int nr = (int)Math.round(Math.random()*100);
         if(nr<85) {
            String[] wow = {"english"};
            return wow;
         }
         else if(nr<93) {
-           String[] wow ={"english", "french"};
+           String[] wow ={"french", "english"};
            return wow;
         }
         else if(nr<97) {
-           String[] wow = {"english", "spanish"};
+           String[] wow = {"spanish", "english"};
            return wow;
         }
         else  {

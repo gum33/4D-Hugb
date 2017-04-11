@@ -8,6 +8,7 @@ public class MainClass {
     private static SearchManager searchmanager;
     private static BookManager bookmanager;
     private static Booking booked;
+    private static int sortindex=0;
     
     //Setup ran at launch of the program
     public static void setup() {
@@ -70,7 +71,7 @@ public class MainClass {
         System.out.print("(0) No sort\n(1) Date\n(2) Price\n(3) Duration\n(4) Langauges\n");
         Scanner scanner = new Scanner(System.in);
         try {
-            int sortindex = scanner.nextInt();
+            sortindex = scanner.nextInt();
             while(sortindex<0 && 4<sortindex) {
                 System.out.println("Select 0, 1 , 2, 3 or 4");
                 scanner = new Scanner(System.in);
@@ -93,38 +94,69 @@ public class MainClass {
     the next step, more info booking or start over.
      */
     public static void printResult(ArrayList<Trip> result) {
+        String print="";
         if(result.size()<10) {
             for(int i=0;i<result.size();i++) {
-                System.out.println("("+(i+1)+") "+result.get(i));
+                print = "";
+                Trip tr = result.get(i);
+                print+="("+(i+1)+") "+tr+" - Price: "+tr.getPrice()+" - Date: "+tr.getDate();
+                print+=" - Duration: "+tr.getDuration()+"hours - Langauges: ";
+                for(String lang: tr.getLanguages()) {
+                    print+=lang+", ";
+                }
+                System.out.println(print);
             }
         }
         else {
             for(int i=0;i<10;i++) {
-                System.out.println("("+(i+1)+") "+result.get(i));
+                print = "";
+                Trip tr = result.get(i);
+                print+="("+(i+1)+") "+tr+" - Price: "+tr.getPrice()+" - Date: "+tr.getDate();
+                print+=" - Duration: "+tr.getDuration()+"hours - Langauges: ";
+                for(String lang: tr.getLanguages()) {
+                    print+=lang+", ";
+                }
+                System.out.println(print);
             }
-            System.out.println("(0) Display all "+result.size()+" results");
+            System.out.println("...(0) Display all "+result.size()+" results");
         }
-        System.out.println("Choose a trip number to get more information or book the trip");
-        System.out.println("(b) Go back and search again");
+        System.out.println("\nChoose a trip number to get more information or book the trip");
+        System.out.println("(b) Go back and search again\n(s) Choose a different sorting method");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if(input.equals("0")) {
             for(int i=10;i<result.size();i++) {
-            System.out.println("("+(i+1)+") "+result.get(i));
+                print = "";
+                Trip tr = result.get(i);
+                print+="("+(i+1)+") "+tr+" - Price: "+tr.getPrice()+" - Date: "+tr.getDate();
+                print+=" - Duration: "+tr.getDuration()+"hours - Langauges: ";
+                for(String lang: tr.getLanguages()) {
+                    print+=lang+", ";
+                }
+                System.out.println(print);
             }
             System.out.println("Choose a trip number to get more information or book the trip");
-            System.out.println("(b) Go back and search again");
+            System.out.println("(b) Go back and search again\n(s) Choose a different sorting method");
             scanner = new Scanner(System.in);
             input = scanner.nextLine();
         }
-        if(input.equals("b")) {
+        if(input.equals("b") || input.equals("B")) {
                 firstSearch();
+        }
+        if(input.equals("s") || input.equals("S")) {
+            System.out.println();
+            printResult(sortInterface(result));
         }
         else {
             try {
             int tripnr = Integer.parseInt(input);
+            if(result.size()<tripnr) {
+                System.out.println("\nChoose a number displayed infront of a trip!!");
+                System.out.println();
+                printResult(result);
+            }
             Trip selected = result.get(tripnr-1);
-            tripWorker(selected);
+            tripinfPrint(selected);
         }
             catch(NumberFormatException e) {
                 throw new IllegalArgumentException("Select a valid a valid tripnumber next time");
@@ -133,10 +165,11 @@ public class MainClass {
     }
 
     /* 
-    Function to get more info from trip and call bookmanager
+    Function to get more info from trip and calls BookManager
+    to book the trip.
      */
-    public static void tripWorker(Trip selectedtrip) {
-        System.out.println("You have selected: " +selectedtrip.getDescription());
+    public static void tripinfPrint(Trip selectedtrip) {
+        System.out.println("\nYou have selected: " +selectedtrip.getDescription());
         System.out.println("The trip will is schedueled at: "+selectedtrip.getDate());
         System.out.println("The trip will take: "+ selectedtrip.getDuration()+" hours");
         System.out.println("The trip costs: " +selectedtrip.getPrice()+" kronur");
@@ -148,11 +181,16 @@ public class MainClass {
         for(int i=0;i<selectedtrip.getCategories().length;i++) {
             System.out.print(selectedtrip.getCategories()[i]+", ");
         }
-        System.out.println("\n(0) Book trip\n(1) Go back and search again");
+        System.out.println();
+        tripWorker(selectedtrip);
+    }
+    public static void tripWorker(Trip selectedtrip) {
+        
+        System.out.println("\n(0) Book trip\n(1) Go back and search again\n(2) Add review\n(3) See existing reviews");
         try {
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
-            while(input!=0 && input!=1) {
+            while(input!=0 && input!=1 && input!=2 && input!=3) {
                 System.out.println("Please select (0) or (1)");
                 scanner = new Scanner(System.in);
                 input = scanner.nextInt();
@@ -186,7 +224,29 @@ public class MainClass {
             if(input==1) {
                 firstSearch();
             }
-            endofProgram();
+            if(input==2) {
+                System.out.println("Write your name: ");
+                scanner = new Scanner(System.in);
+                String author = scanner.next();
+                System.out.println("Write in your review:");
+                scanner = new Scanner(System.in);
+                String rev = scanner.nextLine();
+                System.out.println("Rate the trip from 1-5");
+                scanner = new Scanner(System.in);
+                int stars = scanner.nextInt();
+                Review newrev= new Review(author,rev,stars);
+                selectedtrip.setReview(newrev);
+            }
+            if(input==3) {
+                double avg = selectedtrip.getAverage();
+                System.out.printf("\nRating: %.1f",avg);
+                System.out.println();
+                for(Review re: selectedtrip.getReview()) {
+                    System.out.println(re);
+                }
+            }
+            System.out.println();
+            tripWorker(selectedtrip);
             
         }
         catch(IllegalArgumentException e) {
@@ -273,7 +333,7 @@ public class MainClass {
 
     /*
     Last step of program
-    can restart or go to bminteract
+    can restart or go to bminteract to change current booking
     */
     public static void endofProgram() {
         System.out.println("Choose your next step");
