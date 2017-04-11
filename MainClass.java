@@ -200,7 +200,7 @@ public class MainClass {
     Interact with bookmanger for current booking.
      */
     public static void bminteract() {
-        System.out.println("(0) View booking\n(1)Change booking\n(2) Delete Booking");
+        System.out.println("(0) View booking\n(1) Change booking\n(2) Cancel Booking");
         try {
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
