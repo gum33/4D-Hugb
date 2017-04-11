@@ -11,7 +11,8 @@ public class TripContainer {
     private static ArrayList<Trip> alltrips= new ArrayList<Trip>();
     private int tripnumber=0;
     private static Category[] allcategories;
-
+    private static Location[] allocs;
+    private static Supplier[] allSuppliers;
 
     public TripContainer() {
         ArrayList<Trip> alltrips = new ArrayList<Trip>();
@@ -33,6 +34,35 @@ public class TripContainer {
             }
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("categorylist file is missing");
+        }
+        try {
+            Scanner suploc = new Scanner(new FileReader("locsup.txt"));
+            allocs = new Location[8];
+            int i =0;
+            while(suploc.hasNext()) {
+                String temp = suploc.nextLine();
+                Location tmp = new Location(temp);
+                allocs[i] = tmp;
+                i++;
+                
+            }
+            Scanner supper = new Scanner(new FileReader("sup&loc.txt"));
+            Supplier[] allsuppliers = new Supplier[9];
+            int ph=0;
+            i=0;
+            while(supper.hasNext()) {
+               String sup =supper.nextLine();
+               String sup1=sup.substring(0,7);
+               String sup2=sup.substring(9,sup.length());
+               ph = Integer.parseInt(sup1);
+               Supplier tmp = new Supplier(sup1,allocs[0],ph);
+               allsuppliers[i] = tmp;
+               i++;
+
+            }
+        }
+        catch(FileNotFoundException e) {
+            throw new IllegalArgumentException("sup&loc.txt is missing");
         }
     }
     public void addTrip(Trip t) {
@@ -61,8 +91,9 @@ public class TripContainer {
             int capacity = generateCapacity();
             Category[] category = generateCategory();
             String[] langs=generatelangueages();
-            String desc = generateDescription(category[0]);
-            Trip tripper = new Trip(category, duration, date, price, langs, desc, capacity);
+            Location loc = generateLocation();
+            String desc = generateDescription(category[0],loc);
+            Trip tripper = new Trip(category, duration, date, price, langs, desc, capacity, loc);
             alltrips.add(tripper);
         }
     }
@@ -89,6 +120,10 @@ public class TripContainer {
 
     private static int generateCapacity() {
         return (int)Math.round(Math.random()*70+10);
+    }
+    private static Location generateLocation() {
+        int rnd = (int)Math.round(Math.random()*7);
+        return allocs[rnd];
     }
     
     //generates up to 5 categories for the trip
@@ -130,7 +165,8 @@ public class TripContainer {
         String[] triptype= {"adventure", "trip", "exploration", "tour", "visit"};
         int adj = (int)Math.round(Math.random()*11);
         int tt =(int)Math.round(Math.random()*4);
-        String desc = adjective[adj]+ " " +cat + " " +triptype[tt] + " in " + loc".");
+        String desc = adjective[adj]+ " " +cat + " " +triptype[tt] + " in " +loc+".";
+        return desc;
     }
 
     public static void main(String[] args) {

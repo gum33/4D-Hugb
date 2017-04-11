@@ -7,11 +7,11 @@ public class Trip implements Comparable<Trip>{
     private int price; 
     private Review[] review;
     private String[] languages;
-    private Location[] location;
+    private Location location;
     private String description;
     private int capacity;
 
-    public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity) {
+    public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity,Location location) {
     	this.category = category;
     	this.duration = duration;
         this.date = date;
@@ -19,6 +19,7 @@ public class Trip implements Comparable<Trip>{
     	this.languages = languages;
     	this.description = description;
         this.capacity = capacity;
+        this.location=location;
     }
     
     public int compareTo(Trip t) {
@@ -93,20 +94,9 @@ public class Trip implements Comparable<Trip>{
     }
 
     public String toString() {
-        String play = "Enjoy some "+category[0];
-        for(int i=1;i<category.length;i++) {
-            play = play + " and " + category[i];
-        }
-        play = play + " at " + date;
-        play = play+ ", for " + duration+ "hours";
-        play = play+", for only: " +price;
-        play = play+"Tour available in" ;
-        for(int i=0;i<languages.length;i++) {
-            play = play+ ", " +languages[i];
-        }
-        play= play+"\n";
         
-        return play;
+        
+        return this.description;
     }
     
     public static void main(String[] args) {

@@ -3,9 +3,9 @@ public class Location {
     private String placename;
     private String area;
     
-    public Location(String n, String a) {     
+    public Location(String n) {     
         placename = n;
-        area = a;
+        
     }
 
     public String getPlacename() {
