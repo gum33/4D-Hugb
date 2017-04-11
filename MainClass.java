@@ -5,13 +5,14 @@ public class MainClass {
     private static TripContainer tripcontainer;
     private static Category[] allcategories;
     private static SearchManager searchmanager;
-   // private static BookManager bookmanager;
+    private static BookManager bookmanager;
+    private static Booking booked;
     public static void setup() {
         tripcontainer = new TripContainer();
         tripcontainer.generateTrips();
         allcategories = tripcontainer.getallCategories();
         searchmanager = new SearchManager();
-       // bookmanager = new BookManager();
+        bookmanager = new BookManager();
     }
 
     public static void firstSearch() {
@@ -148,8 +149,18 @@ public class MainClass {
                 input = scanner.nextInt();
             }
             if(input==0) {
+                System.out.print("Please write in your name: ");
+                scanner = new Scanner(System.in);
+                String name = scanner.nextLine();
+                System.out.print("\nPlease write number of people: ");
+                scanner = new Scanner(System.in);
+                int nrofpeople = scanner.nextInt();
+                if(bookmanager.isTripFull(selectedtrip, nrofpeople)) {
+                    booked=bookmanager.createBooking(selectedtrip, nrofpeople, name);
+                    System.out.println(booked);
+                }
+                else System.out.println("Not enough space in this trip");
 
-                //bookmanager.isTripful
             }
             else if(input==1) {
                 firstSearch();
