@@ -12,9 +12,11 @@ public class TripContainer {
     private int tripnumber=0;
     private static Category[] allcategories;
 
+
     public TripContainer() {
         ArrayList<Trip> alltrips = new ArrayList<Trip>();
         tripnumber = 0;
+        //Get categories from text file 
         try {
             Scanner categorylist = new Scanner(new FileReader("categorylist.txt"));
             List<String> temps = new ArrayList<String>();
@@ -29,12 +31,9 @@ public class TripContainer {
                 Category cat = new Category(temps.get(i));;
                 allcategories[i] = cat;
             }
-            //generateTrips();
         } catch (FileNotFoundException e) {
             throw new IllegalArgumentException("categorylist file is missing");
         }
-        
-
     }
     public void addTrip(Trip t) {
         alltrips.ensureCapacity(tripnumber+1);
@@ -50,6 +49,10 @@ public class TripContainer {
     public Category[] getallCategories() {
         return allcategories;
     }
+
+    /*
+    For our purpose we randomly generate trips
+    for the container by calling on this method */
     public static void generateTrips() {
         for(int i = 0;i<2000;i++) {
             double duration = generateDuration();
@@ -58,7 +61,7 @@ public class TripContainer {
             int capacity = generateCapacity();
             Category[] category = generateCategory();
             String[] langs=generatelangueages();
-            String desc = generateDescription();
+            String desc = generateDescription(category[0]);
             Trip tripper = new Trip(category, duration, date, price, langs, desc, capacity);
             alltrips.add(tripper);
         }
@@ -69,6 +72,7 @@ public class TripContainer {
         return Math.round(dur*2)/2.0;
     }
 
+    //Price generate, longer duration increased chance of high price
     private static int generatePrice(double d) {
         double p = 10000*d;
         double low = Math.random()*(d-1)+1;
@@ -86,9 +90,9 @@ public class TripContainer {
     private static int generateCapacity() {
         return (int)Math.round(Math.random()*70+10);
     }
-
-    private static Category[] generateCategory() {
-        
+    
+    //generates up to 5 categories for the trip
+    private static Category[] generateCategory() {    
         int othernumber =(int)Math.round(Math.random()*4 + 1);
         Category[] funk = new Category[othernumber];
         for(int i=0;i<funk.length;i++) {
@@ -98,6 +102,7 @@ public class TripContainer {
         return funk;
     }
 
+    //trips can be available in multible languages.
     private static String[] generatelangueages() {
         int nr = (int)Math.random()*100;
         if(nr<85) {
@@ -119,8 +124,13 @@ public class TripContainer {
         
     }
 
-    private static String generateDescription() {
-        return "PRETTY GOOD INNIT";
+    private static String generateDescription(Category cat, Location loc) {
+        String[] adjective ={"Great", "Beautiful", "Wonderful", "Fantastic","Cool","Awesome","Exciting"
+        ,"Adventurous","A Different","Bombastic","Wunderbar","Nice"};
+        String[] triptype= {"adventure", "trip", "exploration", "tour", "visit"};
+        int adj = (int)Math.round(Math.random()*11);
+        int tt =(int)Math.round(Math.random()*4);
+        String desc = adjective[adj]+ " " +cat + " " +triptype[tt] + " in " + loc".");
     }
 
     public static void main(String[] args) {
