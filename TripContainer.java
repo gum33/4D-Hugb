@@ -51,7 +51,7 @@ public class TripContainer {
         return allcategories;
     }
     public static void generateTrips() {
-        for(int i = 0;i<1000;i++) {
+        for(int i = 0;i<2000;i++) {
             double duration = generateDuration();
             int price = generatePrice(duration);
             String date = generateDate();
