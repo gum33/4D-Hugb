@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class BookManager {
-
+    public static final ArrayList<Booking> bookings = new ArrayList<Booking>();
     public BookManager() {    	
     }
     
@@ -19,6 +18,7 @@ public class BookManager {
     
     public Booking createBooking(Trip selectedTrip, int passengers, String name) {
     	Booking booking = new Booking(name, selectedTrip.getDate(), selectedTrip, passengers);
+        bookings.add(booking);
     	int n = selectedTrip.getCapacity();
     	selectedTrip.setCapacity(n-passengers);
     	return booking;
@@ -26,10 +26,12 @@ public class BookManager {
     
     public void cancelBooking(Booking aborted) {
     	Trip trip = aborted.getTrip();
+        bookings.remove(aborted);
     	int n = trip.getCapacity();
     	int pass = aborted.getPassengers();
     	trip.setCapacity(n+pass);
     	aborted = null;
+        
     }
     
     public int changeBooking(Booking mod, int here, String name, int passengers) {
@@ -51,5 +53,6 @@ public class BookManager {
     	}
     	return 0;
     }
+    
 
 }

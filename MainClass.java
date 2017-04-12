@@ -2,6 +2,12 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+/*
+Main interaction class for 4D trip searching programs.
+Takes input from user and displays information
+contacts other classes to work with input from user
+Also does error handling if user inputs non valid inputs
+ */
 public class MainClass {
     private static TripContainer tripcontainer;
     private static Category[] allcategories;
@@ -20,14 +26,18 @@ public class MainClass {
     }
 
     //iniate search over all available search
+    //Interface when initally selecting categories
     public static void firstSearch() {
         System.out.println("Select categories from the list");
+        //Print all categories
         for(int i = 0;i<allcategories.length;i++) {
             System.out.print("("+i + ") " + allcategories[i]+ ". ");
             if (i%3==0 &&0<i) System.out.println();
         }
         System.out.println();
+        //Contact search interface
         ArrayList<Trip> foundTrips = findCategories();
+        //Nothing found keep contacting search interface
         while(foundTrips.isEmpty()) {
             System.out.println("No trips found try another combination of categories");
             foundTrips = findCategories();
@@ -45,20 +55,24 @@ public class MainClass {
         String input = scanner.nextLine();
         String[] numbers = input.split(" ");
         Category[] selectedcategories = new Category[numbers.length];
+        //Work with selected numbers to search our tripcontainer
+        //Catching most user errors and helping them out
         for(int i =0;i<numbers.length;i++) {
             try { 
                 int categorynr = Integer.parseInt(numbers[i]);
-                if(categorynr>=allcategories.length && categorynr<0) {
+                if(categorynr>=allcategories.length || categorynr<0) {
                 System.out.println("Try selecting numbers beetween 0-26");
                 return findCategories();
                 }
                 selectedcategories[i] = allcategories[categorynr];
             }
             catch (NumberFormatException e) {
-                throw new IllegalArgumentException("\nSELECT A NUMBER NEXT TIME");
+               System.out.println("\nChoose numbers displayed in front of the categories");
+               return findCategories();
             }
             
-        } 
+        }
+
         return searchmanager.search(selectedcategories, tripcontainer);
     }
     /*
@@ -72,7 +86,9 @@ public class MainClass {
         Scanner scanner = new Scanner(System.in);
         try {
             sortindex = scanner.nextInt();
-            while(sortindex<0 && 4<sortindex) {
+            /*Similiar while loops used several times so
+            user selects valid options*/
+            while(sortindex<0 || 4<sortindex) {
                 System.out.println("Select 0, 1 , 2, 3 or 4");
                 scanner = new Scanner(System.in);
                 sortindex=scanner.nextInt();
@@ -84,8 +100,9 @@ public class MainClass {
             if(sortindex==0) return sortthis;
             return sortInterface(sortthis);
         }
-        catch (NumberFormatException e) {
-            throw new IllegalArgumentException("\nSELECT A NUMBER NEXT TIME");
+        catch (InputMismatchException e) {
+            System.out.println("\nPlease choose a number displayed in front of the searching method");
+            return sortInterface(sortthis);
         }
     }
 
@@ -150,16 +167,18 @@ public class MainClass {
         else {
             try {
             int tripnr = Integer.parseInt(input);
-            if(result.size()<tripnr) {
+            if(result.size()<tripnr || tripnr<1) {
                 System.out.println("\nChoose a number displayed infront of a trip!!");
                 System.out.println();
                 printResult(result);
             }
             Trip selected = result.get(tripnr-1);
             tripinfPrint(selected);
+            tripWorker(selected);
         }
             catch(NumberFormatException e) {
-                throw new IllegalArgumentException("Select a valid a valid tripnumber next time");
+                System.out.println("\nChoose a number displayed infront of a trip!\n");
+                printResult(result);
             }
         }
     }
@@ -182,7 +201,6 @@ public class MainClass {
             System.out.print(selectedtrip.getCategories()[i]+", ");
         }
         System.out.println();
-        tripWorker(selectedtrip);
     }
     public static void tripWorker(Trip selectedtrip) {
         
@@ -191,10 +209,12 @@ public class MainClass {
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
             while(input!=0 && input!=1 && input!=2 && input!=3) {
-                System.out.println("Please select (0) or (1)");
+                System.out.println("Please select 0, 1, 2 or 3");
                 scanner = new Scanner(System.in);
                 input = scanner.nextInt();
             }
+            //Booking option selected
+            //Trip is booked and sends you to endofProgram
             while(input==0) {
                 System.out.print("Please write in your name: ");
                 scanner = new Scanner(System.in);
@@ -203,9 +223,10 @@ public class MainClass {
                 scanner = new Scanner(System.in);
                 int nrofpeople = scanner.nextInt();
                 if(bookmanager.isTripFull(selectedtrip, nrofpeople)) {
-                    booked=bookmanager.createBooking(selectedtrip, nrofpeople, name);
+                    booked = bookmanager.createBooking(selectedtrip, nrofpeople, name);
                     System.out.println(booked);
                     input = -1;
+                    endofProgram();
                 }
                 else { 
                     System.out.println("Not enough space in this trip");
@@ -221,9 +242,11 @@ public class MainClass {
                     }
                 }
             }
+            //Search again selected
             if(input==1) {
                 firstSearch();
             }
+            //Add review
             if(input==2) {
                 System.out.println("Write your name: ");
                 scanner = new Scanner(System.in);
@@ -237,29 +260,56 @@ public class MainClass {
                 Review newrev= new Review(author,rev,stars);
                 selectedtrip.setReview(newrev);
             }
+            //see reviews
             if(input==3) {
-                double avg = selectedtrip.getAverage();
-                System.out.printf("\nRating: %.1f",avg);
-                System.out.println();
-                for(Review re: selectedtrip.getReview()) {
-                    System.out.println(re);
+                if(selectedtrip.getReview().isEmpty()) {
+                    System.out.println("\nThis trip has no reviews");
+                }
+                else {
+                    double avg = selectedtrip.getAverage();
+                    System.out.printf("\nRating: %.1f",avg);
+                    System.out.println();
+                    for(Review re: selectedtrip.getReview()) {
+                        System.out.println(re);
+                    }
                 }
             }
-            System.out.println();
             tripWorker(selectedtrip);
             
         }
-        catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException("\nPlease select a number");
+        catch(InputMismatchException e) {
+            System.out.println("\nChoose a number displayed in front of your options");
+            tripWorker(selectedtrip);
         }
-
-
     }
 
     /*
-    Interact with bookmanger for current booking.
+    Interact with bookmanger for your bookings.
      */
     public static void bminteract() {
+        System.out.println("\nChoose one of your bookings");
+        int index=0;
+        for(Booking b: BookManager.bookings) {
+            System.out.println("("+index+") "+b);
+            index++;
+        }
+        System.out.println();
+        try {
+            Scanner scanner = new Scanner(System.in);
+            int input=scanner.nextInt();
+            while(input<0 || BookManager.bookings.size()<=input) {
+                System.out.println("Please select a number beetween 0-"+BookManager.bookings.size());
+                scanner = new Scanner(System.in);
+                input=scanner.nextInt();
+            }
+            booked = BookManager.bookings.get(input);
+        }
+        catch(InputMismatchException e) {
+            System.out.println("Please select a number in front of your booking\n");
+            bminteract();
+        }
+            
+        
         System.out.println("(0) View booking\n(1) Change booking\n(2) Cancel Booking");
         try {
             Scanner scanner = new Scanner(System.in);
@@ -270,8 +320,17 @@ public class MainClass {
                 input=scanner.nextInt();
             }
             if(input == 0) {
-                System.out.println(booked);
-                endofProgram();
+                tripinfPrint(booked.getTrip());
+                System.out.println("\n(0)Back to my bookings\n(1) Change booking\n(2) Cancel Booking");
+                scanner = new Scanner(System.in);
+                input=scanner.nextInt();
+                while(input!=0 && input!=1 && input!=2) {
+                    System.out.println("Please choose 0, 1 or 2");
+                    scanner = new Scanner(System.in);
+                    input=scanner.nextInt(); 
+                }
+                if(input==0) bminteract();
+
             }
             if(input==1) {
                 System.out.println("What do you want to change");
@@ -343,14 +402,24 @@ public class MainClass {
         try {
             Scanner scanner = new Scanner(System.in);
             int input = scanner.nextInt();
+            while(input!=0 && input!=1 && input!=2) {
+                System.out.println("Please select 0, 1 or 2");
+                scanner = new Scanner(System.in);
+                input = scanner.nextInt();
+            }
             if(input==0) {
                 firstSearch();
             }
             if(input==1)  {
-                bminteract();
+                if(bookmanager.bookings.isEmpty()) {
+                    System.out.println("\nYou have no bookings\n");
+                    endofProgram();
+                }
+                else bminteract();
             }
             if(input==2) {
                 System.out.println("Thank you for using this program!");
+                System.exit(0);
             }
         }
         catch(InputMismatchException e) {
