@@ -10,6 +10,7 @@ public class Trip implements Comparable<Trip>{
     private Location location;
     private String description;
     private int capacity;
+    private Supplier supplier;
 
     public Trip(Category[] category, double duration, String date, int price, String[] languages, String description, int capacity,Location location) {
     	this.category = category;
@@ -43,6 +44,12 @@ public class Trip implements Comparable<Trip>{
     public void setCategories(Category c){
     }
 
+    public Supplier getSupplier() {
+        return this.supplier;
+    }
+    public void setSupplier(Supplier supplier) {
+        this.supplier=supplier;
+    }
 
     public String[] getLanguages() {
     	return this.languages;
@@ -68,7 +75,7 @@ public class Trip implements Comparable<Trip>{
         double ind=0;
         for(Review re: review) {
             sum=sum+re.getStars();
-            ind++;
+            ind++;  
 
         }
         return (sum/ind);

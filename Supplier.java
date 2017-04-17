@@ -34,10 +34,7 @@ public class Supplier{
     }
 
     public String toString() {
-        String print = name + "\nIs located at: ";
-        print = print + location + ", ";
-        
-        print = print + "\nTelephone: " + telephone;
+        String print = name + ", Phone: " + telephone;
         return print;
     }
 }

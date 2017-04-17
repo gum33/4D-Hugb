@@ -12,7 +12,7 @@ public class TripContainer {
     private int tripnumber=0;
     private static Category[] allcategories;
     private static Location[] allocs;
-    private static Supplier[] allSuppliers;
+    private static Supplier[] allsuppliers;
 
     //Constructs container and pulls information from text files to make trips
     public TripContainer() {
@@ -48,15 +48,15 @@ public class TripContainer {
                 
             }
             Scanner supper = new Scanner(new FileReader("sup&loc.txt"));
-            Supplier[] allsuppliers = new Supplier[9];
+            allsuppliers = new Supplier[9];
             int ph=0;
             i=0;
             while(supper.hasNext()) {
                String sup =supper.nextLine();
                String sup1=sup.substring(0,7);
-               String sup2=sup.substring(9,sup.length());
+               String sup2=sup.substring(8,sup.length());
                ph = Integer.parseInt(sup1);
-               Supplier tmp = new Supplier(sup1,allocs[0],ph);
+               Supplier tmp = new Supplier(sup2,allocs[0],ph);
                allsuppliers[i] = tmp;
                i++;
 
@@ -95,6 +95,7 @@ public class TripContainer {
             Location loc = generateLocation();
             String desc = generateDescription(category[0],loc);
             Trip tripper = new Trip(category, duration, date, price, langs, desc, capacity, loc);
+            tripper.setSupplier(generateSupplier());
             alltrips.add(tripper);
         }
     }
@@ -170,6 +171,10 @@ public class TripContainer {
         return desc;
     }
 
+    private static Supplier generateSupplier() {
+        int rnd = (int)Math.round(Math.random()*8);
+        return allsuppliers[rnd];
+    }
     public static void main(String[] args) {
         System.out.println(generatePrice(5));
         System.out.println(generateDate());

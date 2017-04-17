@@ -189,6 +189,7 @@ public class MainClass {
      */
     public static void tripinfPrint(Trip selectedtrip) {
         System.out.println("\nYou have selected: " +selectedtrip.getDescription());
+        System.out.println("Trip is provided by: "+ selectedtrip.getSupplier());
         System.out.println("The trip will is schedueled at: "+selectedtrip.getDate());
         System.out.println("The trip will take: "+ selectedtrip.getDuration()+" hours");
         System.out.println("The trip costs: " +selectedtrip.getPrice()+" kronur");
@@ -202,6 +203,10 @@ public class MainClass {
         }
         System.out.println();
     }
+
+    /*
+    Options when a trip is selected
+    */ 
     public static void tripWorker(Trip selectedtrip) {
         
         System.out.println("\n(0) Book trip\n(1) Go back and search again\n(2) Add review\n(3) See existing reviews");
@@ -212,7 +217,7 @@ public class MainClass {
                 System.out.println("Please select 0, 1, 2 or 3");
                 scanner = new Scanner(System.in);
                 input = scanner.nextInt();
-            }
+            } 
             //Booking option selected
             //Trip is booked and sends you to endofProgram
             while(input==0) {
@@ -232,7 +237,7 @@ public class MainClass {
                     System.out.println("Not enough space in this trip");
                     int cap = selectedtrip.getCapacity();
                     System.out.println("This trip has space for: "+cap+" persons");
-                    System.out.print("(0) Book for fewer people\n(1) Go back and search for another trip");
+                    System.out.println("(0) Book for fewer people\n(1) Go back and search for another trip");
                     scanner = new Scanner(System.in);
                     input = scanner.nextInt();
                     while(input!=0 && input!=1) {
@@ -242,10 +247,12 @@ public class MainClass {
                     }
                 }
             }
+
             //Search again selected
             if(input==1) {
                 firstSearch();
             }
+
             //Add review
             if(input==2) {
                 System.out.println("Write your name: ");
@@ -369,9 +376,8 @@ public class MainClass {
                     scanner = new Scanner(System.in);
                     int newnr = scanner.nextInt();
                     bookchange = bookmanager.changeBooking(booked, choice, newname, newnr);
-                    endofProgram();
                 }
-                System.out.println(booked);
+                
                 if(bookchange!=0) {
                     System.out.println("BOOKING FAIL\nYou can only add: "+bookchange+" persons");
                     System.out.println("Please try another option");
@@ -383,6 +389,8 @@ public class MainClass {
                 System.out.println("Booking has been cancelled");
                 endofProgram();
             }
+            System.out.println(booked);
+            endofProgram();
         }
         catch(InputMismatchException e){ 
             System.out.println("Select a valid number");
@@ -395,7 +403,7 @@ public class MainClass {
     can restart or go to bminteract to change current booking
     */
     public static void endofProgram() {
-        System.out.println("Choose your next step");
+        System.out.println("\nChoose your next step");
         System.out.println("(0) Start over and search again");
         System.out.println("(1) View or change your booking");
         System.out.println("(2) Exit");

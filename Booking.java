@@ -36,7 +36,7 @@ public class Booking {
 		this.passengers = passengers;
 	}
 	public String toString() {
-		String ananas = "Your trip " + trip.getDescription() + " is booked for " + getPassengers();
+		String ananas = "Your trip, " + trip.getDescription() + " is booked for " + getPassengers();
 		return ananas;
 	}
 }
