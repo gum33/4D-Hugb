@@ -8,12 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class TripContainer {
-    private static ArrayList<Trip> alltrips= new ArrayList<Trip>();
+    private static final ArrayList<Trip> alltrips= new ArrayList<Trip>();
     private int tripnumber=0;
     private static Category[] allcategories;
     private static Location[] allocs;
     private static Supplier[] allSuppliers;
 
+    //Constructs container and pulls information from text files to make trips
     public TripContainer() {
         ArrayList<Trip> alltrips = new ArrayList<Trip>();
         tripnumber = 0;

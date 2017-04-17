@@ -3,23 +3,22 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
+/*
+Searches tripcontainer and returns lists containing the result of the search / sort
+*/
 public class SearchManager {
-    private ArrayList<Trip> trips= new ArrayList<>();
-    private List<Trip> result;
-    private TripContainer alltrips = new TripContainer();
 
     public SearchManager() {
-       TripContainer alltrips = new TripContainer();
-       
     }
 
+
     public ArrayList<Trip> search(Category[] searchedCategory, TripContainer wh) {
-        alltrips = wh;
-        trips = alltrips.getTrips();
+        ArrayList<Trip> trips = wh.getTrips();
         int n = searchedCategory.length;
         int c = trips.size();
         int i,  k;
-        ArrayList<Trip> B = new ArrayList<>();
+        ArrayList<Trip> searchresult = new ArrayList<>(); //List for returning
+        
         for(i=0;i<c;i++) {
             boolean check = true;
             Trip look = trips.get(i);
@@ -35,10 +34,10 @@ public class SearchManager {
                 if(!check) break;
             }
             if(check) {
-                B.add(look);
+                searchresult.add(look);
             }
         }
-        return B;
+        return searchresult;
         
 
     }
@@ -134,9 +133,6 @@ public class SearchManager {
         return arr;
     }
 
-    public void addTrip(Trip t) {
-        
-    }
     public static void main(String[] args ) {
         
     }

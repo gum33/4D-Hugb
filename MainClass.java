@@ -284,7 +284,7 @@ public class MainClass {
     }
 
     /*
-    Interact with bookmanger for your bookings.
+    Interact with bookmanger for your bookings. Weak readability
      */
     public static void bminteract() {
         System.out.println("\nChoose one of your bookings");
